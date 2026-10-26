@@ -1,155 +1,81 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/home.dart';
 
-class Login extends StatelessWidget {
-  final usernameController = TextEditingController();
-  final passwordController = TextEditingController();
+class Login extends StatefulWidget {
+  const new({super.key});
 
-  Login({super.key});
+  @override
+  State<Login> createState() => _LoginState();
+}
 
+class _LoginState extends State<Login> {
+  final formkey=GlobalKey<FormState>();
+  final username=TextEditingController();
+  final password=TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: const Color.fromARGB(255, 25, 49, 69),
-        title: Text(
-          "Login",
-          style: TextStyle(
-            color: const Color.fromARGB(255, 241, 230, 200),
-            fontWeight: FontWeight.bold,
-          ),
-        ),
+        title: Text("Login"),
         centerTitle: true,
+
       ),
-      backgroundColor: const Color.fromARGB(255, 247, 242, 231),
-      body: Center(
-        child: Container(
-          width: MediaQuery.of(context).size.width * 0.8,
-          height: MediaQuery.of(context).size.height * 0.5,
-          color: const Color.fromARGB(255, 21, 51, 75),
-          padding: EdgeInsets.all(25),
+      
+      body: Padding(
+        padding: EdgeInsets.all(10),
+        child: Form(
+          key: formkey,
           child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Text(
-                "Login",
-                style: TextStyle(
-                  color: const Color.fromARGB(255, 241, 230, 200),
-                  fontSize: 30,
-                  fontWeight: FontWeight.bold,
-                ),
+              Align(
+                alignment: Alignment.centerLeft,
+                child: Text("Username"),
               ),
-
-              SizedBox(height: 20),
-
-              TextField(
-                controller: usernameController,
+              SizedBox(height: 3,),
+              TextFormField(
+                controller: username,
                 decoration: InputDecoration(
-                  labelText: "Username",
-                  filled: true,
-                  fillColor: const Color.fromARGB(241, 254, 244, 235),
+                  hintText: 'Enter Username',
                   border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(12),
-                  ),
+                    borderRadius: BorderRadius.circular(12)
+                  )
                 ),
               ),
-
-              SizedBox(height: 20),
-
-              TextField(
-                controller: passwordController,
+              SizedBox(height: 10,),
+              Align
+              (alignment: Alignment.centerLeft, 
+              child: Text("Password")),
+              SizedBox(height: 3,),
+              TextFormField(
+                controller: password,
                 obscureText: true,
                 decoration: InputDecoration(
-                  labelText: "Password",
-                  filled: true,
-                  fillColor: const Color.fromARGB(241, 254, 244, 235),
+                  hintText: 'Enter Password',
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(12),
-                  ),
+                  )
                 ),
               ),
-
-              SizedBox(height: 30),
-
-              SizedBox(
-                width: double.infinity,
-                height: 55,
-                child: ElevatedButton(
-                  onPressed: () {
-                    if (usernameController.text == "mufaz" &&
-                        passwordController.text == "1234") {
-
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(
-                          content: Text("Login Successful!",
-                          style: TextStyle(
-                            color: Colors.black,
-                          ),
-                          ),
-                          backgroundColor: const Color.fromARGB(255, 249, 251, 249),
-                          duration: Duration(seconds: 2),
-                        ),
+              SizedBox(height: 15,),
+              ElevatedButton(
+                onPressed: (){
+                  if(username.text=="admin"&&password.text=="1234"){
+            Navigator.pushReplacement(
+                    context, MaterialPageRoute(
+                      builder: (context)=>Home()
+                      ),
                       );
-
-                      Future.delayed(Duration(seconds: 2), () {
-                        Navigator.pushReplacement(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => Home(),
-                          ),
-                        ); 
-                      });
-
-                    } else {
-                      showDialog(
-                        context: context,
-                        builder: (context) {
-                          return AlertDialog(
-                            title: Text("Login Failed"),
-                            content: Text(
-                              "Incorrect username or password",
-                            ),
-                            actions: [
-                              TextButton(
-                                onPressed: () {
-                                  Navigator.pop(context);
-                                },
-                                child: Text("OK"),
-                              ),
-                            ],
-                          );
-                        },
-                      );
-                    }
-                  },
-                  child: Text(
-                    "Login",
-                    style: TextStyle(
-                      fontSize: 18,
-                    ),
-                  ),
-                ),
-              ),
-
-              SizedBox(height: 10),
-
-              Align(
-                alignment: AlignmentGeometry.bottomLeft,
-                child: TextButton(
-                  onPressed: () {},
-                  child: Text(
-                    "Forgot password ?",
-                    style: TextStyle(
-                      color: const Color.fromARGB(241, 254, 244, 235),
-                      fontSize: 16,
-                    ),
-                  ),
-                ),
-              ),
+                  }else{
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(content: Text('incorrect username or password')));
+                }
+                 
+                },
+                child: Text("Login"))
             ],
-          ),
+          )),
         ),
-      ),
     );
   }
 }
-
